@@ -21,8 +21,8 @@ import (
 
 	"github.com/johanbrandhorst/gopherjs-grpc-websocket/client/compiled"
 	pserver "github.com/johanbrandhorst/gopherjs-grpc-websocket/protos/server"
+	"github.com/johanbrandhorst/gopherjs-grpc-websocket/server"
 	"github.com/johanbrandhorst/gopherjs-grpc-websocket/server/insecure"
-	"github.com/johanbrandhorst/gopherjs-grpc-websocket/server/server"
 )
 
 var logger *logrus.Logger
