@@ -1,10 +1,8 @@
 # Building the client
-Install dependencies:
+Install gopherjs (note that gopherjs cannot be vendored,
+see https://github.com/gopherjs/gopherjs/issues/415):
 ```
-$ go get -u github.com/gopherjs/gopherjs/js \
-    honnef.co/go/js/xhr \
-    github.com/oskca/gopherjs-vue \
-    github.com/gopherjs/websocket
+$ go get -u github.com/gopherjs/gopherjs/js
 ```
 
 Install vendored programs:
@@ -19,5 +17,5 @@ $ go generate ./client/
 
 # Run the server
 ```
-$ go run ./server/main.go
+$ go run main.go
 ```
