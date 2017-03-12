@@ -49,7 +49,7 @@ func main() {
 	pserver.RegisterServerServer(gs, s)
 	conn, err := net.Listen("tcp", addr)
 	if err != nil {
-		logger.Fatal("Failed to listen on address: ", err)
+		logger.WithError(err).Fatal("Failed to start listener")
 	}
 
 	// Gracefully shut down on ctrl-c
@@ -87,7 +87,7 @@ func main() {
 	dopts := []grpc.DialOption{grpc.WithTransportCredentials(dcreds)}
 	err = pserver.RegisterServerHandlerFromEndpoint(ctx, gwMux, addr, dopts)
 	if err != nil {
-		logger.Fatal("Failed to dial server: ", err)
+		logger.WithError(err).Fatal("Failed to dial server")
 	}
 
 	srv := &http.Server{

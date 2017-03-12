@@ -55,7 +55,7 @@ func (s Server) Bidi(srv server.Server_BidiServer) error {
 		}
 	}()
 
-	for {
+	for i := uint32(0); ; i++ {
 		select {
 		case err := <-errChan:
 			if err == io.EOF {
@@ -65,7 +65,9 @@ func (s Server) Bidi(srv server.Server_BidiServer) error {
 
 			return err
 		case msg := <-msgChan:
-			// Just echo back the message sent
+			// Just echo back the message sent,
+			// incrementing the counter
+			msg.Num = i
 			if err := srv.Send(msg); err != nil {
 				return err
 			}

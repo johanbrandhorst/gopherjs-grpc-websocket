@@ -3,7 +3,8 @@ Install dependencies:
 ```
 $ go get -u github.com/gopherjs/gopherjs/js \
     honnef.co/go/js/xhr \
-    github.com/oskca/gopherjs-vue
+    github.com/oskca/gopherjs-vue \
+    github.com/gopherjs/websocket
 ```
 
 Install vendored programs:

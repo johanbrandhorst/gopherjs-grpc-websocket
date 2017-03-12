@@ -56,6 +56,22 @@
                 </div>
             </div>
         </p>
+        <p>
+            <h2>Bidi</h2>
+            <div v-if="!ws_conn">
+                <button @click="Connect()">Connect to Websocket</button>
+            </div>
+            <form v-if="ws_conn" v-on:submit.prevent>
+                <input type="text" v-model="input_message"></input>
+                <button @click="Send()">Send Websocket message</button>
+                <button @click="Close()">Close Websocket</button>
+            </form>
+            <div v-if="bidi_messages">
+                <div v-for="msg in bidi_messages">
+                    Message: {{ msg.msg }}, Num: {{ msg.num }}
+                </div>
+            </div>
+        </p>
     </div>
     <script src="index.js"></script>
 </body>
