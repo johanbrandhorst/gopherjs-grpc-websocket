@@ -32,7 +32,7 @@ const addr = "localhost:10000"
 
 func init() {
 	logger = logrus.StandardLogger()
-	logrus.SetLevel(logrus.InfoLevel)
+	logrus.SetLevel(logrus.WarnLevel)
 	logrus.SetFormatter(&logrus.TextFormatter{
 		ForceColors:     true,
 		FullTimestamp:   true,
