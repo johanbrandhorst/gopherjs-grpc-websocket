@@ -27,22 +27,6 @@ def delete_generated_files(proto_root):
                 os.unlink(filepath)
 
 
-def alter_swagger_schema(proto_root, package):
-    '''
-    Set the value of 'schemes' in the <package>.swagger.json
-    file to just 'https'.
-    '''
-    swagger_path = os.path.join(proto_root, package, package + '.swagger.json')
-
-    with open(swagger_path, 'r') as f:
-        j = json.load(f)
-
-    j['schemes'] = ['https']
-
-    with open(swagger_path, 'w') as f:
-        json.dump(obj=j, fp=f, sort_keys=True, indent=4)
-
-
 def get_includes(package):
     '''
     Returns the includes used with protoc, in order of preference.
@@ -85,7 +69,7 @@ def run_protoc(proto_root, package, compilers):
 def build_service(proto_root, package):
     '''
     Build a service, with the grpc-plugin for the --go_out
-    compiler, as well as the --grpc-gateway_out and --swagger_out compilers.
+    compiler, as well as the --grpc-gateway_out compiler.
     '''
     replaced_imports = {
         'google/api/annotations.proto': GOOGLE_APIS_PATH + 'google/api',
@@ -101,7 +85,6 @@ def build_service(proto_root, package):
     compilers = [
         '--go_out={}:{}'.format(','.join(go_out_params), GOPATH_SRC),
         '--grpc-gateway_out={}:./'.format(','.join(grpc_gateway_out_params)),
-        '--swagger_out={}:./'.format(','.join(grpc_gateway_out_params)),
     ]
 
     run_protoc(proto_root, package, compilers)
@@ -126,7 +109,6 @@ def main():
     delete_generated_files(proto_root)
 
     build_service(proto_root, 'server')
-    alter_swagger_schema(proto_root, 'server')
 
 
 if __name__ == '__main__':
