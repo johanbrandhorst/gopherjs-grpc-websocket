@@ -32,6 +32,8 @@ const addr = "localhost:10000"
 
 func init() {
 	logger = logrus.StandardLogger()
+	// The websocket proxy logs to info level which
+	// gets pretty verbose.
 	logrus.SetLevel(logrus.WarnLevel)
 	logrus.SetFormatter(&logrus.TextFormatter{
 		ForceColors:     true,
@@ -99,7 +101,7 @@ func main() {
 		},
 	}
 
-	logger.Print("Serving on ", addr)
+	logger.Warn("Serving on ", addr)
 	logger.Fatal(srv.Serve(tls.NewListener(conn, srv.TLSConfig)))
 }
 
