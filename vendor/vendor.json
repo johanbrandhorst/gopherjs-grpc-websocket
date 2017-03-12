@@ -1,6 +1,6 @@
 {
 	"comment": "",
-	"ignore": "test appengine solaris",
+	"ignore": "test appengine solaris github.com/gopherjs/gopherjs/js",
 	"package": [
 		{
 			"checksumSHA1": "NRonvQTe073YVead6//CQ5oVgK4=",
@@ -27,7 +27,7 @@
 			"revisionTime": "2017-03-07T00:15:33Z"
 		},
 		{
-			"checksumSHA1": "kBeNcaKk56FguvPSUCEaH6AxpRc=",
+			"checksumSHA1": "q3Bc7JpLWBqhZ4M7oreGo34RSkc=",
 			"path": "github.com/golang/protobuf/proto",
 			"revision": "c9c7427a2a70d2eb3bafa0ab2dc163e45f143317",
 			"revisionTime": "2017-03-07T00:15:33Z"
@@ -61,6 +61,18 @@
 			"path": "github.com/golang/protobuf/protoc-gen-go/plugin",
 			"revision": "c9c7427a2a70d2eb3bafa0ab2dc163e45f143317",
 			"revisionTime": "2017-03-07T00:15:33Z"
+		},
+		{
+			"checksumSHA1": "9wOTz0iWfOSTSTmUkoq0WYkiMdY=",
+			"path": "github.com/golang/protobuf/ptypes/empty",
+			"revision": "c9c7427a2a70d2eb3bafa0ab2dc163e45f143317",
+			"revisionTime": "2017-03-07T00:15:33Z"
+		},
+		{
+			"checksumSHA1": "yXEqGooGiycHYFxmrjeNY3IZGrU=",
+			"path": "github.com/gopherjs/websocket",
+			"revision": "edfe1438a4184bea0b3f9e35fd77969061676d9c",
+			"revisionTime": "2016-04-03T01:41:02Z"
 		},
 		{
 			"checksumSHA1": "G778A9feKkdW7ZjeDdj5qoU0Ku4=",
@@ -99,18 +111,6 @@
 			"revisionTime": "2017-03-04T03:40:43Z"
 		},
 		{
-			"checksumSHA1": "v+AvHdnsq43A2ugO19/PaaF1jCo=",
-			"path": "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger",
-			"revision": "fdcb7eab2d6ed4919e83ddcef4f199c161611e1f",
-			"revisionTime": "2017-03-04T03:40:43Z"
-		},
-		{
-			"checksumSHA1": "FR3kLG5uFRf2nbnfvzGT4LDSim0=",
-			"path": "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/genswagger",
-			"revision": "fdcb7eab2d6ed4919e83ddcef4f199c161611e1f",
-			"revisionTime": "2017-03-04T03:40:43Z"
-		},
-		{
 			"checksumSHA1": "SeAuuufiXeiMVlYi/j8YT9kPrCM=",
 			"path": "github.com/grpc-ecosystem/grpc-gateway/runtime",
 			"revision": "fdcb7eab2d6ed4919e83ddcef4f199c161611e1f",
@@ -145,6 +145,36 @@
 			"path": "github.com/jteeuwen/go-bindata/go-bindata",
 			"revision": "a0ff2567cfb70903282db057e799fd826784d41d",
 			"revisionTime": "2015-10-23T09:11:02Z"
+		},
+		{
+			"checksumSHA1": "pvJyL57C6iNY158Ag4J2eAP1Zvw=",
+			"path": "github.com/oskca/gopherjs-dom",
+			"revision": "32ec7beb35cf955fdc223ba03621f12e490edc7d",
+			"revisionTime": "2017-02-12T05:52:51Z"
+		},
+		{
+			"checksumSHA1": "K2igc4IrVv4j/Z/x3p4mVzBpV0s=",
+			"path": "github.com/oskca/gopherjs-json",
+			"revision": "fa80e2036d4607f8e17dc282b2da430890efc116",
+			"revisionTime": "2017-01-22T10:10:01Z"
+		},
+		{
+			"checksumSHA1": "2+BLZY+ra+UdT0GIZ7SyrgHOUnQ=",
+			"path": "github.com/oskca/gopherjs-vue",
+			"revision": "ab40c9e57345d35375c820c8e885d28ed70f165e",
+			"revisionTime": "2017-02-25T02:33:25Z"
+		},
+		{
+			"checksumSHA1": "g8CSxWeyf3Fs3Y9ZhQYa7lQmzS8=",
+			"path": "github.com/oskca/gopherjs-vue/jscode/debug",
+			"revision": "ab40c9e57345d35375c820c8e885d28ed70f165e",
+			"revisionTime": "2017-02-25T02:33:25Z"
+		},
+		{
+			"checksumSHA1": "M3U7o/DWBhrN38doZ0zTbK/LIgg=",
+			"path": "github.com/oskca/gopherjs-vue/jscode/minified",
+			"revision": "ab40c9e57345d35375c820c8e885d28ed70f165e",
+			"revisionTime": "2017-02-25T02:33:25Z"
 		},
 		{
 			"checksumSHA1": "7vUz1SqU8+Wb7vSBw+JnqwWF3Rk=",
@@ -265,6 +295,18 @@
 			"path": "google.golang.org/grpc/transport",
 			"revision": "d50cf2db166eaff3f2429425758d12205085eb5b",
 			"revisionTime": "2017-03-10T19:14:43Z"
+		},
+		{
+			"checksumSHA1": "yJy8Z1H4oXdW/jxT2F+VzrEViXE=",
+			"path": "honnef.co/go/js/util",
+			"revision": "96b8dd9d16214b6cd9d8c8e84b3a375da4688108",
+			"revisionTime": "2015-02-16T22:39:35Z"
+		},
+		{
+			"checksumSHA1": "BivnYL12uO9W35pVwnGzhCe7utg=",
+			"path": "honnef.co/go/js/xhr",
+			"revision": "00e3346113aed89b501ead4e863c7c3d04fa0c5b",
+			"revisionTime": "2015-03-07T03:10:22Z"
 		}
 	],
 	"rootPath": "github.com/johanbrandhorst/gopherjs-grpc-websocket"
