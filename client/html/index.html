@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style type="text/css">
+        body {
+            margin: 40px auto;
+            max-width: 650px;
+            line-height: 1.6;
+            font-size: 18px;
+            color: #444;
+            padding: 010px
+        }
+
+        h1,
+        h2,
+        h3 {
+            line-height: 1.2
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
+
+        table,
+        th,
+        td {
+            padding: 5px;
+            border: 1px solid #444;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <title>gRPC Websockets</title>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <h1>gRPC through gopherjs!</h1>
+        <p>
+            <h2>Simple</h2>
+            <button v-if="!simple_message" @click="Simple()">Send GET</button>
+            <div v-if="simple_message">
+                Message: {{ simple_message.msg }}, Num: {{ simple_message.num }}
+            </div>
+        </p>
+        <p>
+            <h2>Unary</h2>
+            <button v-if="unary_messages.length == 0" @click="Unary()">Send GET</button>
+            <div v-if="unary_messages">
+                <div v-for="msg in unary_messages">
+                    Message: {{ msg.msg }}, Num: {{ msg.num }}
+                </div>
+            </div>
+        </p>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>

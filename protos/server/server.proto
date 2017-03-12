@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package server;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+// Correct import path
+option go_package = "github.com/johanbrandhorst/gopherjs-grpc-websocket/protos/server";
+
+service Server {
+    rpc Simple(google.protobuf.Empty) returns (MyMessage) {
+        option (google.api.http) = {
+            get: "/api/v1/simple"
+        };
+    }
+    rpc Unary(google.protobuf.Empty) returns (stream MyMessage) {
+        option (google.api.http) = {
+            get: "/api/v1/unary"
+        };
+    }
+    rpc Bidi(stream MyMessage) returns (stream MyMessage) {
+        option (google.api.http) = {
+            get: "/api/v1/bidi"
+        };
+    }
+}
+
+message MyMessage {
+    string msg = 1;
+    uint32 num = 2;
+}

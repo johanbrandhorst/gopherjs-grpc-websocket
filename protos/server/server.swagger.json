@@ -1,0 +1,100 @@
+{
+    "consumes": [
+        "application/json"
+    ],
+    "definitions": {
+        "protobufEmpty": {
+            "description": "service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+            "title": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:",
+            "type": "object"
+        },
+        "serverMyMessage": {
+            "properties": {
+                "msg": {
+                    "type": "string"
+                },
+                "num": {
+                    "format": "int64",
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "info": {
+        "title": "protos/server/server.proto",
+        "version": "version not set"
+    },
+    "paths": {
+        "/api/v1/bidi": {
+            "get": {
+                "operationId": "Bidi",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "msg",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "format": "int64",
+                        "in": "query",
+                        "name": "num",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "(streaming responses)",
+                        "schema": {
+                            "$ref": "#/definitions/serverMyMessage"
+                        }
+                    }
+                },
+                "tags": [
+                    "Server"
+                ]
+            }
+        },
+        "/api/v1/simple": {
+            "get": {
+                "operationId": "Simple",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/serverMyMessage"
+                        }
+                    }
+                },
+                "tags": [
+                    "Server"
+                ]
+            }
+        },
+        "/api/v1/unary": {
+            "get": {
+                "operationId": "Unary",
+                "responses": {
+                    "200": {
+                        "description": "(streaming responses)",
+                        "schema": {
+                            "$ref": "#/definitions/serverMyMessage"
+                        }
+                    }
+                },
+                "tags": [
+                    "Server"
+                ]
+            }
+        }
+    },
+    "produces": [
+        "application/json"
+    ],
+    "schemes": [
+        "https"
+    ],
+    "swagger": "2.0"
+}
