@@ -69,7 +69,7 @@ def run_protoc(proto_root, package, compilers):
 def build_service(proto_root, package):
     '''
     Build a service, with the grpc-plugin for the --go_out
-    compiler, as well as the --grpc-gateway_out compiler.
+    compiler, as well as the --grpc-gateway_out and --gopherjs_out compilers.
     '''
     replaced_imports = {
         'google/api/annotations.proto': GOOGLE_APIS_PATH + 'google/api',
@@ -77,14 +77,17 @@ def build_service(proto_root, package):
 
     go_out_params = ['plugins=grpc', ]
     grpc_gateway_out_params = ['logtostderr=true', ]
+    gopherjs_out_params = []
 
     for old_import, new_import in replaced_imports.items():
         go_out_params.append('M{}={}'.format(old_import, new_import))
         grpc_gateway_out_params.append('M{}={}'.format(old_import, new_import))
+        gopherjs_out_params.append('M{}={}'.format(old_import, new_import))
 
     compilers = [
         '--go_out={}:{}'.format(','.join(go_out_params), GOPATH_SRC),
         '--grpc-gateway_out={}:./'.format(','.join(grpc_gateway_out_params)),
+        '--gopherjs_out={}:./client/'.format(','.join(gopherjs_out_params)),
     ]
 
     run_protoc(proto_root, package, compilers)
