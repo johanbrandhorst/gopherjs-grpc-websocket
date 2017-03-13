@@ -135,6 +135,18 @@
 			"revisionTime": "2017-03-04T03:40:43Z"
 		},
 		{
+			"checksumSHA1": "P8GewTnmAMNkrK6vr0+b8OGB83s=",
+			"path": "github.com/johanbrandhorst/protoc-gen-gopherjs",
+			"revision": "9c69047bfdae29ecf15303b9c1f48539c095cffc",
+			"revisionTime": "2017-03-13T22:05:08Z"
+		},
+		{
+			"checksumSHA1": "wmre4YqmpYsUGuo3puCO/3wgmMA=",
+			"path": "github.com/johanbrandhorst/protoc-gen-gopherjs/filegenerator",
+			"revision": "9c69047bfdae29ecf15303b9c1f48539c095cffc",
+			"revisionTime": "2017-03-13T22:05:08Z"
+		},
+		{
 			"checksumSHA1": "MzTCg3kFsi/89bf1wGsGJwIykEM=",
 			"path": "github.com/jteeuwen/go-bindata",
 			"revision": "a0ff2567cfb70903282db057e799fd826784d41d",
