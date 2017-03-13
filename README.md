@@ -1,5 +1,5 @@
 # gopherjs-grpc-websocket
-An example implementation of bridging a gRCP backend with a
+An example implementation of bridging a gRPC backend with a
 GopherJS frontend over Websockets, XHR requests and the [grpc-gateway](https://github.com/grpc-ecosystem/grpc-gateway).
 
 A large focus of this project is to show that you can implement both simple HTTP
