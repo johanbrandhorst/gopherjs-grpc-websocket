@@ -13,16 +13,17 @@ import (
 	"honnef.co/go/js/xhr"
 
 	"github.com/johanbrandhorst/gopherjs-grpc-websocket/client/helpers"
+	"github.com/johanbrandhorst/gopherjs-grpc-websocket/client/protos/server"
 )
 
 // Model is the state keeper of the app.
 type Model struct {
 	*js.Object
-	SimpleMessage *MyMessage   `js:"simple_message"`
-	UnaryMessages []*MyMessage `js:"unary_messages"`
-	InputMessage  string       `js:"input_message"`
-	BidiMessages  []*MyMessage `js:"bidi_messages"`
-	ConnOpen      bool         `js:"ws_conn"`
+	SimpleMessage *server.MyMessage   `js:"simple_message"`
+	UnaryMessages []*server.MyMessage `js:"unary_messages"`
+	InputMessage  string              `js:"input_message"`
+	BidiMessages  []*server.MyMessage `js:"bidi_messages"`
+	ConnOpen      bool                `js:"ws_conn"`
 }
 
 var WSConn net.Conn
@@ -48,7 +49,7 @@ func (m *Model) Simple() {
 			panic(err)
 		}
 
-		msg := &MyMessage{
+		msg := &server.MyMessage{
 			Object: rObj,
 		}
 
@@ -80,7 +81,7 @@ func (m *Model) Unary() {
 			// "result" key.
 			aux := &struct {
 				*js.Object
-				msg *MyMessage `js:"result"`
+				msg *server.MyMessage `js:"result"`
 			}{
 				Object: rObj,
 			}
@@ -123,11 +124,11 @@ func (m *Model) Close() {
 	}
 
 	m.ConnOpen = false
-	m.BidiMessages = []*MyMessage{}
+	m.BidiMessages = []*server.MyMessage{}
 }
 
 func (m *Model) Send() {
-	msg := &MyMessage{
+	msg := &server.MyMessage{
 		Object: js.Global.Get("Object").New(),
 	}
 	msg.Msg = m.InputMessage
@@ -159,22 +160,13 @@ func (m *Model) Send() {
 		// "result" key.
 		aux := &struct {
 			*js.Object
-			msg *MyMessage `js:"result"`
+			msg *server.MyMessage `js:"result"`
 		}{
 			Object: rObj,
 		}
 
 		m.BidiMessages = append(m.BidiMessages, aux.msg)
 	}()
-}
-
-// MyMessage implements the same JS interface as the proto file struct.
-// It is recreated here to avoid having to import the generated files
-// (which would explode the generated file size).
-type MyMessage struct {
-	*js.Object
-	Msg string `js:"msg"`
-	Num int    `js:"num"`
 }
 
 func main() {
@@ -185,8 +177,8 @@ func main() {
 	// These must be set after the struct has been initialised
 	// so that the values can be mirrored into the internal JS Object.
 	m.SimpleMessage = nil
-	m.UnaryMessages = []*MyMessage{}
-	m.BidiMessages = []*MyMessage{}
+	m.UnaryMessages = []*server.MyMessage{}
+	m.BidiMessages = []*server.MyMessage{}
 	m.InputMessage = ""
 	m.ConnOpen = false
 
