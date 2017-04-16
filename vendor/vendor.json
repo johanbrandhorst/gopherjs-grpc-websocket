@@ -141,6 +141,12 @@
 			"revisionTime": "2017-04-04T23:42:07Z"
 		},
 		{
+			"checksumSHA1": "ETv7OknZmw7smWJyRgeqAjbPTYM=",
+			"path": "github.com/johanbrandhorst/gopherjs-json",
+			"revision": "16ebfe289840aa39716621635fea708e4898d4a1",
+			"revisionTime": "2017-04-16T23:20:53Z"
+		},
+		{
 			"checksumSHA1": "vWsbJTGg8GsmxaaafQ2S4d/2IoE=",
 			"path": "github.com/johanbrandhorst/protoc-gen-gopherjs",
 			"revision": "b6d375b3c37c8c238cbc7389eafd0a03c4f957a3",

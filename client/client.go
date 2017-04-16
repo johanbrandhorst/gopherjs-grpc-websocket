@@ -9,6 +9,7 @@ import (
 
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/websocket"
+	"github.com/johanbrandhorst/gopherjs-json"
 	"github.com/oskca/gopherjs-vue"
 	"honnef.co/go/js/xhr"
 
@@ -44,7 +45,7 @@ func (m *Model) Simple() {
 			panic(req.ResponseText)
 		}
 
-		rObj, err := helpers.UnmarshalJSON(req.ResponseText)
+		rObj, err := json.Unmarshal(req.ResponseText)
 		if err != nil {
 			panic(err)
 		}
@@ -72,7 +73,7 @@ func (m *Model) Unary() {
 			resp := req.ResponseText[bytesRead:]
 			bytesRead += len(resp)
 
-			rObj, err := helpers.UnmarshalJSON(resp)
+			rObj, err := json.Unmarshal(resp)
 			if err != nil {
 				panic(err)
 			}
@@ -133,7 +134,7 @@ func (m *Model) Send() {
 		Object: js.Global.Get("Object").New(),
 	}
 	msg.Msg = m.InputMessage
-	s, err := helpers.MarshalJSON(msg.Object)
+	s, err := json.Marshal(msg.Object)
 	if err != nil {
 		panic(err)
 	}
@@ -152,7 +153,7 @@ func (m *Model) Send() {
 			panic(err)
 		}
 
-		rObj, err := helpers.UnmarshalJSON(string(buf[:n]))
+		rObj, err := json.Unmarshal(string(buf[:n]))
 		if err != nil {
 			panic(err)
 		}
