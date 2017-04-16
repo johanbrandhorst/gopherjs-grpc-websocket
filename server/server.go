@@ -40,37 +40,23 @@ func (s Server) Unary(_ *empty.Empty, srv server.MyServer_UnaryServer) error {
 }
 
 func (s Server) Bidi(srv server.MyServer_BidiServer) error {
-	errChan := make(chan error, 1)
-	msgChan := make(chan *server.MyMessage, 1)
-
-	go func() {
-		for {
-			msg, err := srv.Recv()
-			if err != nil {
-				errChan <- err
-				return
-			}
-
-			msgChan <- msg
-		}
-	}()
-
 	for i := uint32(0); ; i++ {
-		select {
-		case err := <-errChan:
+		// Blocks until a message is received
+		msg, err := srv.Recv()
+		if err != nil {
 			if err == io.EOF {
 				// Client closed connection
 				return nil
 			}
 
 			return err
-		case msg := <-msgChan:
-			// Just echo back the message sent,
-			// incrementing the counter
-			msg.Num = i
-			if err := srv.Send(msg); err != nil {
-				return err
-			}
+		}
+
+		// Just echo back the message sent,
+		// incrementing the counter
+		msg.Num = i
+		if err := srv.Send(msg); err != nil {
+			return err
 		}
 	}
 }
