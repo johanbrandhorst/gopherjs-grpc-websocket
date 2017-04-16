@@ -32,9 +32,7 @@ const addr = "localhost:10000"
 
 func init() {
 	logger = logrus.StandardLogger()
-	// The websocket proxy logs to info level which
-	// gets pretty verbose.
-	logrus.SetLevel(logrus.WarnLevel)
+	logrus.SetLevel(logrus.InfoLevel)
 	logrus.SetFormatter(&logrus.TextFormatter{
 		ForceColors:     true,
 		FullTimestamp:   true,
@@ -54,13 +52,18 @@ func main() {
 		logger.WithError(err).Fatal("Failed to start listener")
 	}
 
+	// Create a context for easy cancellation
+	ctx, cancelFunc := context.WithCancel(context.Background())
+	defer cancelFunc()
+
 	// Gracefully shut down on ctrl-c
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
 		<-c
-		gs.GracefulStop()
-		conn.Close()
+		go cancelFunc()
+		go gs.GracefulStop()
+		go conn.Close()
 	}()
 
 	mux := http.NewServeMux()
@@ -79,8 +82,6 @@ func main() {
 	)
 	// Wrap the gateway in the websocket proxy for bidi streams!
 	mux.Handle("/api/", wsproxy.WebsocketProxy(gwMux))
-	ctx, cancelFunc := context.WithCancel(context.Background())
-	defer cancelFunc()
 
 	dcreds := credentials.NewTLS(&tls.Config{
 		ServerName: addr,
