@@ -31,7 +31,6 @@ def get_includes(package):
     ensure the correct version is used if there are duplicates.
     '''
     return [
-        '-I/usr/local/include',
         '-I./',
         '-I./vendor/github.com/googleapis/googleapis/',
         '-I./vendor/',
