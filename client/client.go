@@ -113,6 +113,7 @@ func (m *Model) Connect() {
 		if err != nil {
 			panic(err)
 		}
+
 		m.ConnOpen = true
 	}()
 }

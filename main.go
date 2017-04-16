@@ -48,7 +48,7 @@ func main() {
 	s := &server.Server{}
 
 	gs := grpc.NewServer(grpc.Creds(credentials.NewServerTLSFromCert(insecure.KeyPair)))
-	pserver.RegisterServerServer(gs, s)
+	pserver.RegisterMyServerServer(gs, s)
 	conn, err := net.Listen("tcp", addr)
 	if err != nil {
 		logger.WithError(err).Fatal("Failed to start listener")
@@ -87,7 +87,7 @@ func main() {
 		RootCAs:    insecure.CertPool,
 	})
 	dopts := []grpc.DialOption{grpc.WithTransportCredentials(dcreds)}
-	err = pserver.RegisterServerHandlerFromEndpoint(ctx, gwMux, addr, dopts)
+	err = pserver.RegisterMyServerHandlerFromEndpoint(ctx, gwMux, addr, dopts)
 	if err != nil {
 		logger.WithError(err).Fatal("Failed to dial server")
 	}
