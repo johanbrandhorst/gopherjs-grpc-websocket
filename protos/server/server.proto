@@ -8,7 +8,7 @@ import "google/protobuf/empty.proto";
 // Correct import path
 option go_package = "github.com/johanbrandhorst/gopherjs-grpc-websocket/protos/server";
 
-service Server {
+service MyServer {
     rpc Simple(google.protobuf.Empty) returns (MyMessage) {
         option (google.api.http) = {
             get: "/api/v1/simple"
@@ -21,7 +21,7 @@ service Server {
     }
     rpc Bidi(stream MyMessage) returns (stream MyMessage) {
         option (google.api.http) = {
-            get: "/api/v1/bidi"
+            post: "/api/v1/bidi"
         };
     }
 }
