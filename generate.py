@@ -5,10 +5,7 @@ import os
 import subprocess
 import logging
 import argparse
-import shlex
 
-GOOGLE_APIS_PATH = ('github.com/grpc-ecosystem/grpc-gateway/'
-                    'third_party/googleapis/')
 GOPATH_SRC = os.path.join(os.environ['GOPATH'], 'src')
 
 
@@ -36,7 +33,7 @@ def get_includes(package):
     return [
         '-I/usr/local/include',
         '-I./',
-        '-I./vendor/' + GOOGLE_APIS_PATH,
+        '-I./vendor/github.com/googleapis/googleapis/',
         '-I./vendor/',
         '-I' + GOPATH_SRC,
     ]
@@ -71,18 +68,10 @@ def build_service(proto_root, package):
     Build a service, with the grpc-plugin for the --go_out
     compiler, as well as the --grpc-gateway_out and --gopherjs_out compilers.
     '''
-    replaced_imports = {
-        'google/api/annotations.proto': GOOGLE_APIS_PATH + 'google/api',
-    }
 
     go_out_params = ['plugins=grpc', ]
     grpc_gateway_out_params = ['logtostderr=true', ]
     gopherjs_out_params = []
-
-    for old_import, new_import in replaced_imports.items():
-        go_out_params.append('M{}={}'.format(old_import, new_import))
-        grpc_gateway_out_params.append('M{}={}'.format(old_import, new_import))
-        gopherjs_out_params.append('M{}={}'.format(old_import, new_import))
 
     compilers = [
         '--go_out={}:{}'.format(','.join(go_out_params), GOPATH_SRC),
