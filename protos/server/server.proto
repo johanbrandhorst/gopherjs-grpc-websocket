@@ -21,7 +21,7 @@ service MyServer {
     }
     rpc Bidi(stream MyMessage) returns (stream MyMessage) {
         option (google.api.http) = {
-            post: "/api/v1/bidi"
+            get: "/api/v1/bidi"
         };
     }
 }
