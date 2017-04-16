@@ -28,7 +28,7 @@ var _ io.Reader
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
-func request_Server_Simple_0(ctx context.Context, marshaler runtime.Marshaler, client ServerClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MyServer_Simple_0(ctx context.Context, marshaler runtime.Marshaler, client MyServerClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq empty.Empty
 	var metadata runtime.ServerMetadata
 
@@ -37,7 +37,7 @@ func request_Server_Simple_0(ctx context.Context, marshaler runtime.Marshaler, c
 
 }
 
-func request_Server_Unary_0(ctx context.Context, marshaler runtime.Marshaler, client ServerClient, req *http.Request, pathParams map[string]string) (Server_UnaryClient, runtime.ServerMetadata, error) {
+func request_MyServer_Unary_0(ctx context.Context, marshaler runtime.Marshaler, client MyServerClient, req *http.Request, pathParams map[string]string) (MyServer_UnaryClient, runtime.ServerMetadata, error) {
 	var protoReq empty.Empty
 	var metadata runtime.ServerMetadata
 
@@ -54,7 +54,7 @@ func request_Server_Unary_0(ctx context.Context, marshaler runtime.Marshaler, cl
 
 }
 
-func request_Server_Bidi_0(ctx context.Context, marshaler runtime.Marshaler, client ServerClient, req *http.Request, pathParams map[string]string) (Server_BidiClient, runtime.ServerMetadata, error) {
+func request_MyServer_Bidi_0(ctx context.Context, marshaler runtime.Marshaler, client MyServerClient, req *http.Request, pathParams map[string]string) (MyServer_BidiClient, runtime.ServerMetadata, error) {
 	var metadata runtime.ServerMetadata
 	stream, err := client.Bidi(ctx)
 	if err != nil {
@@ -106,9 +106,9 @@ func request_Server_Bidi_0(ctx context.Context, marshaler runtime.Marshaler, cli
 	return stream, metadata, nil
 }
 
-// RegisterServerHandlerFromEndpoint is same as RegisterServerHandler but
+// RegisterMyServerHandlerFromEndpoint is same as RegisterMyServerHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterServerHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterMyServerHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -128,15 +128,15 @@ func RegisterServerHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMu
 		}()
 	}()
 
-	return RegisterServerHandler(ctx, mux, conn)
+	return RegisterMyServerHandler(ctx, mux, conn)
 }
 
-// RegisterServerHandler registers the http handlers for service Server to "mux".
+// RegisterMyServerHandler registers the http handlers for service MyServer to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterServerHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	client := NewServerClient(conn)
+func RegisterMyServerHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	client := NewMyServerClient(conn)
 
-	mux.Handle("GET", pattern_Server_Simple_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MyServer_Simple_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		if cn, ok := w.(http.CloseNotifier); ok {
@@ -153,18 +153,18 @@ func RegisterServerHandler(ctx context.Context, mux *runtime.ServeMux, conn *grp
 		if err != nil {
 			runtime.HTTPError(ctx, outboundMarshaler, w, req, err)
 		}
-		resp, md, err := request_Server_Simple_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MyServer_Simple_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Server_Simple_0(ctx, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MyServer_Simple_0(ctx, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Server_Unary_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MyServer_Unary_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		if cn, ok := w.(http.CloseNotifier); ok {
@@ -181,18 +181,18 @@ func RegisterServerHandler(ctx context.Context, mux *runtime.ServeMux, conn *grp
 		if err != nil {
 			runtime.HTTPError(ctx, outboundMarshaler, w, req, err)
 		}
-		resp, md, err := request_Server_Unary_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MyServer_Unary_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Server_Unary_0(ctx, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
+		forward_MyServer_Unary_0(ctx, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Server_Bidi_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_MyServer_Bidi_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		if cn, ok := w.(http.CloseNotifier); ok {
@@ -209,14 +209,14 @@ func RegisterServerHandler(ctx context.Context, mux *runtime.ServeMux, conn *grp
 		if err != nil {
 			runtime.HTTPError(ctx, outboundMarshaler, w, req, err)
 		}
-		resp, md, err := request_Server_Bidi_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MyServer_Bidi_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Server_Bidi_0(ctx, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
+		forward_MyServer_Bidi_0(ctx, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -224,17 +224,17 @@ func RegisterServerHandler(ctx context.Context, mux *runtime.ServeMux, conn *grp
 }
 
 var (
-	pattern_Server_Simple_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "simple"}, ""))
+	pattern_MyServer_Simple_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "simple"}, ""))
 
-	pattern_Server_Unary_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "unary"}, ""))
+	pattern_MyServer_Unary_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "unary"}, ""))
 
-	pattern_Server_Bidi_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "bidi"}, ""))
+	pattern_MyServer_Bidi_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "bidi"}, ""))
 )
 
 var (
-	forward_Server_Simple_0 = runtime.ForwardResponseMessage
+	forward_MyServer_Simple_0 = runtime.ForwardResponseMessage
 
-	forward_Server_Unary_0 = runtime.ForwardResponseStream
+	forward_MyServer_Unary_0 = runtime.ForwardResponseStream
 
-	forward_Server_Bidi_0 = runtime.ForwardResponseStream
+	forward_MyServer_Bidi_0 = runtime.ForwardResponseStream
 )
