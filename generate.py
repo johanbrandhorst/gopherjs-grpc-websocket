@@ -33,8 +33,6 @@ def get_includes(package):
     return [
         '-I./',
         '-I./vendor/github.com/googleapis/googleapis/',
-        '-I./vendor/',
-        '-I' + GOPATH_SRC,
     ]
 
 
