@@ -78,8 +78,8 @@ func (m *Model) Unary() {
 				panic(err)
 			}
 
-			// For some reason the actual message is wrapped in a
-			// "result" key.
+			// The actual message is wrapped in a "result" key.
+			// See https://github.com/grpc-ecosystem/grpc-gateway/blob/b75dbe36289963caa453a924bd92ddf68c3f2a62/runtime/handler.go#L163
 			aux := &struct {
 				*js.Object
 				msg *server.MyMessage `js:"result"`
@@ -184,6 +184,6 @@ func main() {
 	m.InputMessage = ""
 	m.ConnOpen = false
 
-	// create the VueJS viewModel using a struct pointer
+	// Create the VueJS viewModel using a struct pointer
 	vue.New("#app", m)
 }
