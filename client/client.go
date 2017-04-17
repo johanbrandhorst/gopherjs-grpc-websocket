@@ -58,6 +58,31 @@ func (m *Model) Simple() {
 	}()
 }
 
+func getStreamMessage(msg string) *server.MyMessage {
+	rObj, err := json.Unmarshal(msg)
+	if err != nil {
+		panic(err)
+	}
+
+	// The actual message is wrapped in a "result" key,
+	// and there might be an error returned as well.
+	// See https://github.com/grpc-ecosystem/grpc-gateway/blob/b75dbe36289963caa453a924bd92ddf68c3f2a62/runtime/handler.go#L163
+	aux := &struct {
+		*js.Object
+		msg *server.MyMessage `js:"result"`
+	}{
+		Object: rObj,
+	}
+
+	// The most reliable way I've found to check whether
+	// an error was returned.
+	if rObj.Get("error").Bool() {
+		panic(msg)
+	}
+
+	return aux.msg
+}
+
 func (m *Model) Unary() {
 	req := xhr.NewRequest("GET", "/api/v1/unary")
 	req.SetRequestHeader("cache-control", "no-cache")
@@ -73,28 +98,7 @@ func (m *Model) Unary() {
 			resp := req.ResponseText[bytesRead:]
 			bytesRead += len(resp)
 
-			rObj, err := json.Unmarshal(resp)
-			if err != nil {
-				panic(err)
-			}
-
-			// The actual message is wrapped in a "result" key,
-			// and there might be an error returned as well.
-			// See https://github.com/grpc-ecosystem/grpc-gateway/blob/b75dbe36289963caa453a924bd92ddf68c3f2a62/runtime/handler.go#L163
-			aux := &struct {
-				*js.Object
-				msg *server.MyMessage `js:"result"`
-			}{
-				Object: rObj,
-			}
-
-			// The most reliable way I've found to check whether
-			// an error was returned.
-			if rObj.Get("error").Bool() {
-				panic(resp)
-			}
-
-			m.UnaryMessages = append(m.UnaryMessages, aux.msg)
+			m.UnaryMessages = append(m.UnaryMessages, getStreamMessage(resp))
 		}
 	})
 
@@ -161,28 +165,7 @@ func (m *Model) Send() {
 			panic(err)
 		}
 
-		rObj, err := json.Unmarshal(string(buf[:n]))
-		if err != nil {
-			panic(err)
-		}
-
-		// The actual message is wrapped in a "result" key,
-		// and there might be an error returned as well.
-		// See https://github.com/grpc-ecosystem/grpc-gateway/blob/b75dbe36289963caa453a924bd92ddf68c3f2a62/runtime/handler.go#L163
-		aux := &struct {
-			*js.Object
-			msg *server.MyMessage `js:"result"`
-		}{
-			Object: rObj,
-		}
-
-		// The most reliable way I've found to check whether
-		// an error was returned.
-		if rObj.Get("error").Bool() {
-			panic(buf[:n])
-		}
-
-		m.BidiMessages = append(m.BidiMessages, aux.msg)
+		m.BidiMessages = append(m.BidiMessages, getStreamMessage(string(buf[:n])))
 	}()
 }
 
