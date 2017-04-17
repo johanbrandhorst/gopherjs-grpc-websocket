@@ -78,13 +78,20 @@ func (m *Model) Unary() {
 				panic(err)
 			}
 
-			// The actual message is wrapped in a "result" key.
+			// The actual message is wrapped in a "result" key,
+			// and there might be an error returned as well.
 			// See https://github.com/grpc-ecosystem/grpc-gateway/blob/b75dbe36289963caa453a924bd92ddf68c3f2a62/runtime/handler.go#L163
 			aux := &struct {
 				*js.Object
 				msg *server.MyMessage `js:"result"`
 			}{
 				Object: rObj,
+			}
+
+			// The most reliable way I've found to check whether
+			// an error was returned.
+			if rObj.Get("error").Bool() {
+				panic(resp)
 			}
 
 			m.UnaryMessages = append(m.UnaryMessages, aux.msg)
