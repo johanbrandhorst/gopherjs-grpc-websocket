@@ -76,8 +76,9 @@ func main() {
 	}))
 
 	gwMux := runtime.NewServeMux(
-		runtime.WithMarshalerOption("*", &runtime.JSONPb{
+		runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
 			EmitDefaults: true,
+			OrigName:     true,
 		}),
 	)
 	// Wrap the gateway in the websocket proxy for bidi streams!
