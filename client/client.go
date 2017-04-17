@@ -133,6 +133,7 @@ func (m *Model) Close() {
 	}
 
 	m.ConnOpen = false
+	m.InputMessage = ""
 	m.BidiMessages = []*server.MyMessage{}
 }
 
