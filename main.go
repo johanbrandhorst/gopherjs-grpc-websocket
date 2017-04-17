@@ -103,7 +103,7 @@ func main() {
 		},
 	}
 
-	logger.Warn("Serving on ", addr)
+	logger.Warn("Serving on https://", addr)
 	logger.Fatal(srv.Serve(tls.NewListener(conn, srv.TLSConfig)))
 }
 
