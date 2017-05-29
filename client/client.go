@@ -16,6 +16,12 @@ import (
 	"github.com/johanbrandhorst/gopherjs-grpc-websocket/client/helpers"
 )
 
+type MyMessage struct {
+	*js.Object
+	Msg string `js:"msg"`
+	Num uint32 `js:"num"`
+}
+
 // Model is the state keeper of the app.
 type Model struct {
 	*js.Object
