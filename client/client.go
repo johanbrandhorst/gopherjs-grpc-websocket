@@ -14,17 +14,16 @@ import (
 	"honnef.co/go/js/xhr"
 
 	"github.com/johanbrandhorst/gopherjs-grpc-websocket/client/helpers"
-	"github.com/johanbrandhorst/gopherjs-grpc-websocket/client/protos/server"
 )
 
 // Model is the state keeper of the app.
 type Model struct {
 	*js.Object
-	SimpleMessage *server.MyMessage   `js:"simple_message"`
-	UnaryMessages []*server.MyMessage `js:"unary_messages"`
-	InputMessage  string              `js:"input_message"`
-	BidiMessages  []*server.MyMessage `js:"bidi_messages"`
-	ConnOpen      bool                `js:"ws_conn"`
+	SimpleMessage *MyMessage   `js:"simple_message"`
+	UnaryMessages []*MyMessage `js:"unary_messages"`
+	InputMessage  string       `js:"input_message"`
+	BidiMessages  []*MyMessage `js:"bidi_messages"`
+	ConnOpen      bool         `js:"ws_conn"`
 }
 
 var WSConn net.Conn
@@ -50,7 +49,7 @@ func (m *Model) Simple() {
 			panic(err)
 		}
 
-		msg := &server.MyMessage{
+		msg := &MyMessage{
 			Object: rObj,
 		}
 
@@ -58,7 +57,7 @@ func (m *Model) Simple() {
 	}()
 }
 
-func getStreamMessage(msg string) *server.MyMessage {
+func getStreamMessage(msg string) *MyMessage {
 	rObj, err := json.Unmarshal(msg)
 	if err != nil {
 		panic(err)
@@ -69,7 +68,7 @@ func getStreamMessage(msg string) *server.MyMessage {
 	// See https://github.com/grpc-ecosystem/grpc-gateway/blob/b75dbe36289963caa453a924bd92ddf68c3f2a62/runtime/handler.go#L163
 	aux := &struct {
 		*js.Object
-		msg *server.MyMessage `js:"result"`
+		msg *MyMessage `js:"result"`
 	}{
 		Object: rObj,
 	}
@@ -138,11 +137,11 @@ func (m *Model) Close() {
 
 	m.ConnOpen = false
 	m.InputMessage = ""
-	m.BidiMessages = []*server.MyMessage{}
+	m.BidiMessages = []*MyMessage{}
 }
 
 func (m *Model) Send() {
-	msg := &server.MyMessage{
+	msg := &MyMessage{
 		Object: js.Global.Get("Object").New(),
 	}
 	msg.Msg = m.InputMessage
@@ -177,8 +176,8 @@ func main() {
 	// These must be set after the struct has been initialised
 	// so that the values can be mirrored into the internal JS Object.
 	m.SimpleMessage = nil
-	m.UnaryMessages = []*server.MyMessage{}
-	m.BidiMessages = []*server.MyMessage{}
+	m.UnaryMessages = []*MyMessage{}
+	m.BidiMessages = []*MyMessage{}
 	m.InputMessage = ""
 	m.ConnOpen = false
 

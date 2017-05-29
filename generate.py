@@ -62,18 +62,16 @@ def run_protoc(proto_root, package, compilers):
 
 def build_service(proto_root, package):
     '''
-    Build a service, with the grpc-plugin for the --go_out
-    compiler, as well as the --grpc-gateway_out and --gopherjs_out compilers.
+    Build a service with the grpc-plugin for the --go_out
+    and --grpc-gateway_out compilers.
     '''
 
     go_out_params = ['plugins=grpc', ]
     grpc_gateway_out_params = ['logtostderr=true', ]
-    gopherjs_out_params = []
 
     compilers = [
         '--go_out={}:{}'.format(','.join(go_out_params), GOPATH_SRC),
         '--grpc-gateway_out={}:./'.format(','.join(grpc_gateway_out_params)),
-        '--gopherjs_out={}:./client/'.format(','.join(gopherjs_out_params)),
     ]
 
     run_protoc(proto_root, package, compilers)
